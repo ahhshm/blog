@@ -6,7 +6,7 @@ import EmailIcon from "../components/icons/EmailIcon.astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
 
-const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
+const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort(
   (a, b) =>
     new Date(b.frontmatter.pubDate).valueOf() -
     new Date(a.frontmatter.pubDate).valueOf()

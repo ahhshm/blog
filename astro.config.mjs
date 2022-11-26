@@ -15,4 +15,10 @@ export default defineConfig({
       config: { applyBaseStyles: false },
     }),
   ],
+  markdown: {
+    syntaxHighlight: "shiki",
+    shikiConfig: {
+      theme: "github-dark",
+    },
+  },
 });

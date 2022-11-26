@@ -1,12 +1,81 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import Button from "../components/Button.astro";
+import CalenderIcon from "../components/icons/CalenderIcon.astro";
+import EmailIcon from "../components/icons/EmailIcon.astro";
+import GithubIcon from "../components/icons/GithubIcon.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
+
+const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
+  (a, b) =>
+    new Date(b.frontmatter.pubDate).valueOf() -
+    new Date(a.frontmatter.pubDate).valueOf()
+);
 ---
 
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body></body>
+  <body class="bg-[#0F172A]">
+    <header
+      class="relative flex items-center justify-center h-[160px] overflow-hidden"
+    >
+      <div>
+        <img
+          src="/header.png"
+          alt=""
+          class="absolute top-0 left-0 h-full w-full"
+        />
+      </div>
+
+      <div
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      >
+        <h1 class="font-extrabold text-center text-2xl text-white z-50">
+          آرمان هاشمی
+        </h1>
+        <address class="mt-4 flex flex-wrap gap-2 items-center justify-center">
+          <Button>
+            <GithubIcon slot="icon" />
+            <a href="https://github.com/ahhshm" target="_blank">ahhshm@</a>
+          </Button>
+          <Button>
+            <EmailIcon slot="icon" />
+            <span>ahhperso@gmail.com</span>
+          </Button>
+        </address>
+      </div>
+    </header>
+    <main class="max-w-lg md:max-w-xl lg:max-w-3xl mx-auto mt-8">
+      <section class="px-6">
+        <h2 class="text-xl underline text-white">آخرین نوشته ها</h2>
+        <ul class="flex flex-col gap-6 mt-4">
+          {
+            posts.map((post) => (
+              <li>
+                <time datetime={post.frontmatter.pubDate}>
+                  <h3 class="text-lg font-bold text-blue-100">
+                    <a href={post.url}>{post.frontmatter.title}</a>
+                  </h3>
+                  <span class="text-blue-200 text-sm flex gap-2 mt-2">
+                    <CalenderIcon />
+                    {new Date(post.frontmatter.pubDate).toLocaleDateString(
+                      "fa",
+                      {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }
+                    )}
+                  </span>
+                </time>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </main>
+  </body>
 </html>
